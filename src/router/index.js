@@ -18,6 +18,16 @@ const routes = [
     component: () => import("../pages/Tabs.vue")   
   },
   {
+    path: "/counter",
+    name: "counter",
+    component: () => import("../pages/Counter.vue")   
+  },
+  {
+    path: "/counter2",
+    name: "counter2",
+    component: () => import("../pages/Counter2.vue")   
+  },
+  {
     path: "/customer-orders/:id",
     name: "customer-orders",
     component: CustomerOrders,
