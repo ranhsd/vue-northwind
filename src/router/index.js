@@ -13,6 +13,11 @@ const routes = [
     children: [],
   },
   {
+    path: "/tabs",
+    name: "tabs",
+    component: () => import("../pages/Tabs.vue")   
+  },
+  {
     path: "/customer-orders/:id",
     name: "customer-orders",
     component: CustomerOrders,
