@@ -7,7 +7,6 @@ const client = axios.create({
 });
 
 async function getCustomers(params) {
-
   const { data } = await client.get("Customers", {
     params: {
       $select: "CustomerID,CompanyName,ContactName,Address",
@@ -18,4 +17,14 @@ async function getCustomers(params) {
   return data.value;
 }
 
-export { getCustomers };
+async function getCustomerOrders(customerId, params = {}) {
+  const path = `Customers('${customerId}')/Orders`;
+
+  const { data } = await client.get(path, {
+    ...params,
+  });
+
+  return data ? data.value : null;
+}
+
+export { getCustomers, getCustomerOrders };

@@ -14,6 +14,7 @@
           loading-text="Loading customers..."
           :items="items || []"
           :headers="headers"
+          @click:row="onCustomerSelected"
         >
           <template v-slot:header.CompanyName="{ header }">
             <span>{{ header.text }}</span>
@@ -112,15 +113,12 @@ export default {
       }
     },
     async filter() {
-
       this.menu = false;
 
       if (!this.cnFilter) {
         this.refresh();
         return;
       }
-
-      
 
       try {
         this.items = await getCustomers({
@@ -129,6 +127,15 @@ export default {
       } catch (error) {
         alert(error.message);
       }
+    },
+
+    onCustomerSelected(item) {
+      this.$router.push({
+        name: "customer-orders",
+        params: {
+          id: item.CustomerID,
+        },
+      });
     },
   },
   watch: {},
