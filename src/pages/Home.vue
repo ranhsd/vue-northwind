@@ -12,7 +12,7 @@
           :loading="loading"
           :items-per-page="15"
           loading-text="Loading customers..."
-          :items="items || []"
+          :items="customersList || []"
           :headers="headers"
           @click:row="onCustomerSelected"
         >
@@ -57,8 +57,7 @@
 </template>
 
 <script>
-import { getCustomers } from "@/api";
-
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Home",
   components: {},
@@ -98,16 +97,22 @@ export default {
     };
   },
   computed: {
+    ...mapState("customers", ["customersList"]),
     fullName() {
       return this.firstName + " " + this.lastName;
     },
   },
   methods: {
+    ...mapActions("customers", ["getCustomers"]),
     async refresh() {
+
+      // if (this.customersList && this.customersList.length) {
+      //   return;
+      // }
+      
       try {
         this.loading = true;
-        this.items = await getCustomers();
-      } catch (error) {
+        await this.getCustomers();
       } finally {
         this.loading = false;
       }
@@ -124,9 +129,7 @@ export default {
         this.items = await getCustomers({
           $filter: `substringof('${this.cnFilter}',CompanyName) eq true`,
         });
-      } catch (error) {
-        alert(error.message);
-      }
+      } catch (error) {}
     },
 
     onCustomerSelected(item) {

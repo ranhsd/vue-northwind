@@ -32,18 +32,18 @@ import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "Counter",
   computed: {
-    ...mapState(["count"]),
-    ...mapGetters(["counterSquare"]),
+    ...mapState("counter", ["count"]),
+    ...mapGetters("counter", ["counterSquare"]),
   },
   methods: {
-    ...mapMutations(["increment", "incrementWithParams"]),
+    ...mapMutations("counter", ["increment", "incrementWithParams"]),
+    ...mapActions("counter", ["incrementAfter5Seconds", "startTimer"]),
     incrementCounter() {
-        this.increment();
+      this.increment();
     },
     _startTimer() {
       this.startTimer();
     },
-    ...mapActions(["incrementAfter5Seconds", "startTimer"]),
   },
 };
 </script>
