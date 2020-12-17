@@ -1,4 +1,5 @@
 import { getCustomers as fetchCustomers } from "@/api";
+import { getField, updateField } from "vuex-map-fields";
 
 const state = {
   updateCount: 0,
@@ -6,20 +7,29 @@ const state = {
 };
 
 const mutations = {
-  updateCustomers(state, payload) {
-    state.customersList = payload;
-    state.updateCount++;
-  }
+  updateField,
 };
 
-const getters = {};
+const getters = {
+  getField,
+};
 
 const actions = {
   startTimer(context) {},
 
   async getCustomers(context, params) {
+
     const items = await fetchCustomers();
-    context.commit("updateCustomers", items);
+
+    context.commit("updateField", {
+      path: "customersList",
+      value: items,
+    });
+
+    context.commit("updateField", {
+      path: "updateCount",
+      value: state.updateCount + 1,
+    });
   },
 };
 

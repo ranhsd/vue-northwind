@@ -1,6 +1,8 @@
 <template>
   <v-container>
     <div class="text-h2">{{ count }}</div>
+    <div class="text-h2">{{ count2 }}</div>
+    <div class="text-h2">{{ count3 }}</div>
     <div class="text-h2">{{ counterSquare }}</div>
     <v-btn color="primary" class="mt-4" @click="incrementCounter"
       >Increase</v-btn
@@ -28,18 +30,23 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+import { mapFields } from "vuex-map-fields";
+import { mapActions } from "vuex";
 export default {
   name: "Counter",
   computed: {
-    ...mapState("counter", ["count"]),
-    ...mapGetters("counter", ["counterSquare"]),
+    ...mapFields("counter", ["count", "count2", "count3"]),
+    // ...mapState("counter", ["count"]),
+    // ...mapGetters("counter", ["counterSquare"]),
   },
   methods: {
-    ...mapMutations("counter", ["increment", "incrementWithParams"]),
+    // ...mapMutations("counter", ["increment", "incrementWithParams"]),
     ...mapActions("counter", ["incrementAfter5Seconds", "startTimer"]),
     incrementCounter() {
-      this.increment();
+      this.count++;
+      this.count2 += 2;
+      this.count3 += 3;
+      // this.increment();
     },
     _startTimer() {
       this.startTimer();

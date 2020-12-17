@@ -58,6 +58,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { mapFields } from 'vuex-map-fields';
+
 export default {
   name: "Home",
   components: {},
@@ -97,7 +99,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("customers", ["customersList"]),
+    ...mapFields("customers", ["customersList"]),
+    // ...mapState("customers", ["customersList"]),
     fullName() {
       return this.firstName + " " + this.lastName;
     },
